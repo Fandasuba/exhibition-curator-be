@@ -5,10 +5,10 @@ export const findAllUsers = async () => {
   return rows;
 };
 
-export const insertUser = async (username: string, password: string) => {
+export const insertUser = async (email: string, username: string, password: string) => {
   const { rows } = await pool.query(
-    "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *",
-    [username, password]
+    "INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING *",
+    [email, username, password]
   );
   return rows[0];
 };

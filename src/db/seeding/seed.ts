@@ -5,7 +5,6 @@ interface SeedData {
   exhibitionsData: any[];
 }
 
-// Correct function syntax: async function (no => here)
 export default async function seed(data: SeedData, pool: Pool): Promise<void> {
   const client = await pool.connect();
   try {
@@ -16,7 +15,8 @@ export default async function seed(data: SeedData, pool: Pool): Promise<void> {
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
-        name VARCHAR(255) NOT NULL
+        email VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL
       )
     `);
 

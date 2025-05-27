@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: exhibition-postgres
+    environment:
+      POSTGRES_USER: craig-unix
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: exhibition_curator
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - exhibition-network
+    restart: unless-stopped
+
+networks:
+  exhibition-network:
+    external: true
+
+volumes:
+  postgres_data:
