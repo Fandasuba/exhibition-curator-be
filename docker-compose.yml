@@ -15,6 +15,20 @@ services:
       - exhibition-network
     restart: unless-stopped
 
+  seed:
+    image: node:18-alpine
+    container_name: exhibition-seeder
+    working_dir: /app
+    volumes:
+      - .:/app 
+    environment:
+      DATABASE_URL: postgres://craig-unix:password@postgres:5432/exhibition_curator
+    depends_on:
+      - postgres
+    networks:
+      - exhibition-network
+    command: sh -c "npm install && sleep 10 && npm run seed"
+
 networks:
   exhibition-network:
     external: true

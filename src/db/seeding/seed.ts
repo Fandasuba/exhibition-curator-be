@@ -21,9 +21,10 @@ export default async function seed(data: SeedData, pool: Pool): Promise<void> {
     `);
 
     for (const user of data.userData) {
-      await client.query("INSERT INTO users (username, name) VALUES ($1, $2)", [
+      await client.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", [
         user.username,
-        user.name,
+        user.email,
+        user.password
       ]);
     }
 
