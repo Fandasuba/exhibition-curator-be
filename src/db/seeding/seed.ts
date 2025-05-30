@@ -33,17 +33,17 @@ export default async function seed(data: SeedData, pool: Pool): Promise<void> {
     await client.query(`
       CREATE TABLE exhibitions (
         id SERIAL PRIMARY KEY,
-        title TEXT NOT NULL,
+        name TEXT NOT NULL,
         user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-        saved_items JSONB DEFAULT '[]'
+        savedItems JSONB DEFAULT '[]'
       )
     `);
 
     for (const exhibition of data.exhibitionsData) {
       await client.query(
-        "INSERT INTO exhibitions (title, user_id, saved_items) VALUES ($1, $2, $3)",
+        "INSERT INTO exhibitions (name, user_id, savedItems) VALUES ($1, $2, $3)",
         [
-          exhibition.name, // or exhibition.title if you change the data structure
+          exhibition.name,
           exhibition.user_id,
           JSON.stringify(exhibition.savedItems)
         ]
