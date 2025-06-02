@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { Exhibit, findExhibits, insertExhibit } from "../models/exhibitModels";
+import { Exhibit, findExhibits, insertExhibit, patchExhibit } from "../models/exhibitModels";
+import exhibitionsData from "../db/data/exhibitions";
 
 export const getExhibits = async (request: Request, response: Response): Promise <void> => {
     const { userId } = request.params;
@@ -24,6 +25,18 @@ export const createExhibit = async (request: Request, response: Response) => {
         const newExhibit = await insertExhibit(name, user_id)
         response.status(201).json(newExhibit)
     } catch (error){
+        response.status(500).json({error: error})
+    }
+}
+
+export const updateExhibit = async (request: Request, response: Response) => {
+    const {id} = request.params
+    const {saveditems} = request.body
+    try {
+        const ID = Number(id)
+        const exhibit: Exhibit[] = await patchExhibit(ID, saveditems)
+        response.status(200).json(exhibit)
+    } catch (error) {
         response.status(500).json({error: error})
     }
 }

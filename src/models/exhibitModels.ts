@@ -37,3 +37,16 @@ export const insertExhibit = async (name: string, user_id: number) => {
     [name, user_id])
     return rows
 }
+
+export const patchExhibit = async (id: number, saveditems: SavedItem) => {
+try{
+    const {rows} = await pool.query(
+        "UPDATE exhibitions SET savedItems = $1 WHERE id = $2",
+      [JSON.stringify(saveditems), id]
+    )
+    return rows
+} catch(error){
+     console.error("Database error:", error);
+        throw new Error("Failed to Update Exhibit");
+}
+}
