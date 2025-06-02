@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { getExhibits } from "../controllers/exhibitController";
-
-
+import { createExhibit, getExhibits } from "../controllers/exhibitController";
 
 const router = Router();
-router.get("/exhibitions", getExhibits)
-router.post("/exhibitions/create")
 
-export default router
+router.get("/:userId", getExhibits);
+router.post("/create", createExhibit);
+
+export default router;
