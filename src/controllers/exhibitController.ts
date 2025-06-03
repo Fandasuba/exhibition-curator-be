@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { Exhibit, findExhibits, insertExhibit, patchExhibit } from "../models/exhibitModels";
+import { deleteExhibitFromTable, Exhibit, findExhibits, insertExhibit, patchExhibit } from "../models/exhibitModels";
 import exhibitionsData from "../db/data/exhibitions";
+import { request } from "http";
 
 export const getExhibits = async (request: Request, response: Response): Promise <void> => {
     const { userId } = request.params;
@@ -37,6 +38,17 @@ export const updateExhibit = async (request: Request, response: Response) => {
         const exhibit: Exhibit[] = await patchExhibit(ID, saveditems)
         response.status(200).json(exhibit)
     } catch (error) {
+        response.status(500).json({error: error})
+    }
+}
+
+export const deleteExhibit = async (request: Request, response: Response) => {
+    const {id} = request.params
+    try {
+        const ID = Number(id)
+        const deleteExhibit = await deleteExhibitFromTable(ID)
+        response.status(200).json(deleteExhibit)
+    } catch (error){
         response.status(500).json({error: error})
     }
 }

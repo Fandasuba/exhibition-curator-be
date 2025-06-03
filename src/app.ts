@@ -10,6 +10,6 @@ app.use(express.json());
 
 // User routes
 app.use("/api/users", userRoutes);
-app.use("/api/exhibitions", exhibitionRoutes)
+app.use("/api/exhibitions", exhibitionRoutes);
 
 export default app;

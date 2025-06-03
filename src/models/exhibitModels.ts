@@ -50,3 +50,16 @@ try{
         throw new Error("Failed to Update Exhibit");
 }
 }
+
+export const deleteExhibitFromTable = async (id: number) => {
+    try{
+        const {rows} = await pool.query(
+        "DELETE FROM exhibitions WHERE id = $1", 
+      [id]    
+        )
+        return rows
+    } catch (error){
+        console.error("Database error in delete model:", error)
+        throw new Error("Failed to Update Exhibit");
+    }
+}
