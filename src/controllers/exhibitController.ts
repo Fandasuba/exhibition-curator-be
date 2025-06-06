@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { deleteExhibitFromTable, Exhibit, findExhibits, insertExhibit, patchExhibit } from "../models/exhibitModels";
-import exhibitionsData from "../db/data/exhibitions";
-import { request } from "http";
 
 export const getExhibits = async (request: Request, response: Response): Promise <void> => {
     const { userId } = request.params;
