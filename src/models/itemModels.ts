@@ -9,22 +9,32 @@ import pool from "../db/pool";
 // };
 
 export const insertItem = async (exhibitionId: string, userId: string, newItem: object) => {
+  console.log("insertItem called with:", { exhibitionId, userId, newItem });
+  
   const { rows } = await pool.query(
-    "SELECT savedItems FROM exhibitions WHERE id = $1 AND user_id = $2",
+    "SELECT saveditems FROM exhibitions WHERE id = $1 AND user_id = $2",
     [exhibitionId, userId]
   );
+ 
+  console.log("Current exhibition data:", rows[0]);
   
   if (rows.length === 0) {
     throw new Error('Exhibition not found or access denied');
   }
-
-  const currentItems = rows[0].savedItems || [];
+  
+  const currentItems = rows[0].saveditems || [];
+  console.log("Current items:", currentItems);
+  console.log("Current items length:", currentItems.length);
+  
   const updatedItems = [...currentItems, newItem];
-
+  console.log("Updated items:", updatedItems);
+  console.log("Updated items length:", updatedItems.length);
+  
   const { rows: updatedRows } = await pool.query(
-    "UPDATE exhibitions SET savedItems = $1 WHERE id = $2 AND user_id = $3 RETURNING *",
+    "UPDATE exhibitions SET saveditems = $1 WHERE id = $2 AND user_id = $3 RETURNING *",
     [JSON.stringify(updatedItems), exhibitionId, userId]
   );
-  
+ 
+  console.log("Final result:", updatedRows[0]);
   return updatedRows[0];
 };
