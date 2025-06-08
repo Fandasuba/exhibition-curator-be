@@ -12,7 +12,14 @@ export const getExhibits = async (request: Request, response: Response): Promise
     try {
         const ID = Number(userId);
         const exhibits: Exhibit[] = await findExhibits(ID);
-        response.status(200).json(exhibits);
+        response.status(200).json({
+            data: exhibits,
+            pagination: {
+                currentPage: 1,
+                totalPages: 1,
+                totalItems: exhibits.length
+            }
+        });
     } catch (error) {
         response.status(500).json({ error: error });
     }
