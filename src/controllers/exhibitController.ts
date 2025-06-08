@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { deleteExhibitFromTable, Exhibit, findExhibits, insertExhibit, patchExhibit } from "../models/exhibitModels";
 
 export const getExhibits = async (request: Request, response: Response): Promise<void> => {
-    const { userId } = request.query;
+    const { userId } = request.params;
    
     if (!userId) {
-        response.status(400).json({ error: 'userId query parameter is required' });
+        response.status(400).json({ error: 'userId is required' });
         return;
     }
    
