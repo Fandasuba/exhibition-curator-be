@@ -13,3 +13,8 @@
 
 # typescript
 *.tsbuildinfo
+
+.Dockerfile
+.docker-compose.yml
+.exhibition_backup.sql
+.dockerignore
